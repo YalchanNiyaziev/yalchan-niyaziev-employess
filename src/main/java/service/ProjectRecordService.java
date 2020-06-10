@@ -6,8 +6,11 @@ import main.java.model.ProjectRecord;
 import main.java.model.Team;
 import main.java.repository.ProjectRecordRepository;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.*;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class ProjectRecordService {
     private ProjectRecordRepository projectRecordRepository;
@@ -28,22 +31,20 @@ public class ProjectRecordService {
             for (int j = i + 1; j < records.size() - 1; j++) {
                 if (records.get(i).getProject()
                         .equals(records.get(j).getProject())) {
-                    if(
+                    if (
                             (records.get(i).getDateFrom().isAfter(records.get(j).getDateTo()))
-                            || (records.get(j).getDateFrom().isAfter(records.get(i).getDateTo()))
-                    ){
+                                    || (records.get(j).getDateFrom().isAfter(records.get(i).getDateTo()))
+                    ) {
                         continue;
-                    }
-                    else {
-                        Team team = createTeam(records.get(i),records.get(j));
-                        if(!teamSet.contains(team)) {
+                    } else {
+                        Team team = createTeam(records.get(i), records.get(j));
+                        if (!teamSet.contains(team)) {
                             teamSet.add(team);
-                        }
-                        else {
-                            for (Team t:teamSet){
+                        } else {
+                            for (Team t : teamSet) {
 
-                                if(t.equals(team)){
-                                    t.setTogetherWorkDays(t.getTogetherWorkDays()+team.getTogetherWorkDays());
+                                if (t.equals(team)) {
+                                    t.setTogetherWorkDays(t.getTogetherWorkDays() + team.getTogetherWorkDays());
                                 }
                             }
                         }
@@ -54,12 +55,12 @@ public class ProjectRecordService {
         return teamSet;
     }
 
-    private Team createTeam(ProjectRecord ... records) {
+    private Team createTeam(ProjectRecord... records) {
         Team team = new Team();
         Employee[] employees = new Employee[2];
-        employees[0]=records[0].getEmployee();
-        employees[1]=records[1].getEmployee();
-        int workedDays = computeWorkDays(records);
+        employees[0] = records[0].getEmployee();
+        employees[1] = records[1].getEmployee();
+        long workedDays = computeWorkDays(records);
         team.setTeam(employees);
         team.setTogetherWorkDays(workedDays);
         return team;
@@ -67,9 +68,31 @@ public class ProjectRecordService {
 
     }
 
-    private int computeWorkDays(ProjectRecord ... records) {
-        int countWorkDays=5;
-
+    private long computeWorkDays(ProjectRecord... records) {
+        ProjectRecord employeeOne = records[0];
+        ProjectRecord employeeTwo = records[1];
+        LocalDate partnershipStartDate;
+        LocalDate partnershipEndDate;
+        if(employeeOne.getDateFrom().isAfter(employeeTwo.getDateFrom())){
+            partnershipStartDate = employeeOne.getDateFrom();
+        }
+        else {
+            partnershipStartDate=employeeTwo.getDateFrom();
+        }
+        if(employeeOne.getDateTo().isBefore(employeeTwo.getDateTo())){
+            partnershipEndDate=employeeOne.getDateTo();
+        }
+        else {
+            partnershipEndDate=employeeTwo.getDateTo();
+        }
+//
+//        long employeeOneAllWorkDays = DAYS.between(employeeOne.getDateFrom(), employeeOne.getDateTo());
+//        long employeeTwoAllWorkDays = DAYS.between(employeeTwo.getDateFrom(), employeeTwo.getDateTo());
+//        long totalWorkDays = employeeOneAllWorkDays + employeeTwoAllWorkDays;
+//        long countWorkDays = (totalWorkDays -
+//                        ((DAYS.between(employeeTwo.getDateFrom(), employeeOne.getDateFrom()))
+//                        + (DAYS.between(employeeTwo.getDateTo(), employeeOne.getDateTo())))) / 2;
+        long countWorkDays = DAYS.between(partnershipStartDate,partnershipEndDate);
         return countWorkDays;
     }
 
