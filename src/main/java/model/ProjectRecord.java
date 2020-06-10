@@ -2,13 +2,16 @@ package main.java.model;
 
 import java.time.LocalDate;
 
-public class EmployeeProjectRelation {
+public class ProjectRecord {
     private Employee employee;
     private Project project;
     private LocalDate dateFrom;
     private LocalDate dateTo;
 
-    public EmployeeProjectRelation(Employee employee, Project project, LocalDate dateFrom, LocalDate dateTo) {
+    public ProjectRecord() {
+    }
+
+    public ProjectRecord(Employee employee, Project project, LocalDate dateFrom, LocalDate dateTo) {
         this.employee = employee;
         this.project = project;
         this.dateFrom = dateFrom;

@@ -1,5 +1,7 @@
 package main.java.model;
 
+import java.util.Objects;
+
 public class Project {
     private int id;
     private String name;
@@ -24,4 +26,13 @@ public class Project {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        Project project = (Project) o;
+       if(this.getId()==project.getId())
+           return true;
+       return false;
+    }
+
 }
