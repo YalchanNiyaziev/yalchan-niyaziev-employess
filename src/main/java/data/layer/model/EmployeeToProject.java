@@ -1,17 +1,17 @@
-package main.java.model;
+package main.java.data.layer.model;
 
 import java.time.LocalDate;
 
-public class ProjectRecord {
+public class EmployeeToProject {
     private Employee employee;
     private Project project;
     private LocalDate dateFrom;
     private LocalDate dateTo;
 
-    public ProjectRecord() {
+    public EmployeeToProject() {
     }
 
-    public ProjectRecord(Employee employee, Project project, LocalDate dateFrom, LocalDate dateTo) {
+    public EmployeeToProject(Employee employee, Project project, LocalDate dateFrom, LocalDate dateTo) {
         this.employee = employee;
         this.project = project;
         this.dateFrom = dateFrom;

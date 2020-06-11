@@ -1,4 +1,4 @@
-package main.java.model;
+package main.java.data.layer.model;
 
 import java.util.Objects;
 
@@ -38,5 +38,10 @@ public class Project {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return id+"";
     }
 }
