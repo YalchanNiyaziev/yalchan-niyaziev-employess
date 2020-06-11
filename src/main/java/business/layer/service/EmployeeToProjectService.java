@@ -63,7 +63,13 @@ public class EmployeeToProjectService {
 
         Team existedTeam = findFirstNotNull(teamHashMap.get(key1), teamHashMap.get(key2));
         existedTeam.setTogetherWorkDays(existedTeam.getTogetherWorkDays() + team.getTogetherWorkDays());
-        team.getProjects().forEach(p -> existedTeam.getProjects().add(p));
+        team.getProjects().stream().forEach(
+                p -> {
+                    if (!existedTeam.getProjects().contains(p)) {
+                        existedTeam.getProjects().add(p);
+                    }
+                }
+        );
     }
 
     private Team findFirstNotNull(Team... teams) {
