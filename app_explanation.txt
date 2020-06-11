@@ -1,0 +1,14 @@
+Project Task: The task is to find the pair of employees who have worked together the longest in all projects.
+Project Structure: The project is divided into separate layers, as they are divided into packages for easier maintenance and readability.
+      - Data layer: Responsible for the data. Here are two packages:
+          * model: It stores data transfer models;
+          * repository: It is responsible for retrieving and recording data;
+      - Business layer: It is responsible for logical operations. There is the service package, which contains the EmployeeToProjectService class.
+                        The class EmployeeToProjectService is responsible for filtering all extracted data so that the condition is met fulfilled.
+Execution: Execution starts from the entry point, which is the main method, which is located in the Main class. An object of class EmployeeToProjectService is created there.
+           To find the required team, the getTheBestTeam () method of EmployeeToProjectService is called. This method gets all teams by calling the getAllTeams () method.
+           It checks all the records by making several comparisons. The first comparison is made on the basis of projects.
+           If it also passes successfully, the next check is performed, which checks whether the dates of the two records are compatible so that they can be a team.
+           If this check is also successful, a team is created which is unique or an existing one is edited, by adding additional days and projects.
+           Finally, getTheBestTeam() compares all teams by the number of working days together and returns the required team.
+
